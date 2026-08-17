@@ -1,8 +1,16 @@
-import { Building2, MapPin, Search } from 'lucide-react'
+import { Building2, ChevronDown, MapPin, Search } from 'lucide-react'
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { locations, propertyTypes } from '../../data/properties'
 import Button from './Button'
+
+function FieldShell({ children }) {
+  return (
+    <div className="flex h-12 w-full min-w-0 items-center gap-2.5 rounded-xl border border-line bg-white px-3.5 transition focus-within:border-accent focus-within:ring-2 focus-within:ring-accent/20">
+      {children}
+    </div>
+  )
+}
 
 export default function SearchBar({
   compact = false,
@@ -53,9 +61,9 @@ export default function SearchBar({
                 Keyword
               </label>
             )}
-            <div className="relative">
+            <FieldShell>
+              <Search className="h-4 w-4 shrink-0 text-muted" aria-hidden />
               {!labeled && <span className="sr-only">Search properties</span>}
-              <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted" />
               <input
                 id="hero-query"
                 value={query}
@@ -64,9 +72,9 @@ export default function SearchBar({
                   if (error) setError('')
                 }}
                 placeholder="Area, landmark, or keyword"
-                className="input-field h-12 pl-10"
+                className="h-full min-w-0 flex-1 border-0 bg-transparent text-sm text-ink outline-none placeholder:text-muted/70"
               />
-            </div>
+            </FieldShell>
           </div>
         )}
 
@@ -79,9 +87,9 @@ export default function SearchBar({
               Location
             </label>
           )}
-          <div className="relative">
+          <FieldShell>
+            <MapPin className="h-4 w-4 shrink-0 text-muted" aria-hidden />
             {!labeled && <span className="sr-only">Location</span>}
-            <MapPin className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted" />
             <select
               id="hero-location"
               value={location}
@@ -89,7 +97,7 @@ export default function SearchBar({
                 setLocation(e.target.value)
                 if (error) setError('')
               }}
-              className="input-field h-12 appearance-none pl-10"
+              className="h-full min-w-0 flex-1 cursor-pointer appearance-none border-0 bg-transparent text-sm text-ink outline-none"
             >
               <option value="">Any location</option>
               {locations.map((item) => (
@@ -98,7 +106,8 @@ export default function SearchBar({
                 </option>
               ))}
             </select>
-          </div>
+            <ChevronDown className="h-4 w-4 shrink-0 text-muted" aria-hidden />
+          </FieldShell>
         </div>
 
         <div className="min-w-0">
@@ -110,9 +119,9 @@ export default function SearchBar({
               Property type
             </label>
           )}
-          <div className="relative">
+          <FieldShell>
+            <Building2 className="h-4 w-4 shrink-0 text-muted" aria-hidden />
             {!labeled && <span className="sr-only">Property type</span>}
-            <Building2 className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted" />
             <select
               id="hero-type"
               value={type}
@@ -120,7 +129,7 @@ export default function SearchBar({
                 setType(e.target.value)
                 if (error) setError('')
               }}
-              className="input-field h-12 appearance-none pl-10"
+              className="h-full min-w-0 flex-1 cursor-pointer appearance-none border-0 bg-transparent text-sm text-ink outline-none"
             >
               <option value="">Any type</option>
               {propertyTypes.map((item) => (
@@ -129,10 +138,11 @@ export default function SearchBar({
                 </option>
               ))}
             </select>
-          </div>
+            <ChevronDown className="h-4 w-4 shrink-0 text-muted" aria-hidden />
+          </FieldShell>
         </div>
 
-        <div className={labeled ? 'md:col-span-2 lg:col-span-1 lg:pb-0' : ''}>
+        <div className={labeled ? 'md:col-span-2 lg:col-span-1' : ''}>
           {labeled && (
             <span className="mb-1.5 hidden text-xs font-bold uppercase tracking-[0.12em] text-transparent lg:block">
               Action
